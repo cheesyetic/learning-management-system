@@ -7,6 +7,22 @@ use Illuminate\Support\Str;
 
 class Helpers
 {
+  public static function auth_token_helpers() : void
+  {
+      // Check if the token is already in the session
+      if (session()->has('auth_token')) {
+          return;
+      }
+
+      // Generate the token for the user
+      $user = auth()->user();
+      $token = $user->createToken('ApiToken')->plainTextToken;
+
+      // Store the token in the session
+      session(['auth_token' => $token]);
+      return;
+  }
+  
   public static function appClasses()
   {
 
@@ -169,6 +185,7 @@ class Helpers
     }
 
     return $layoutClasses;
+
   }
 
   public static function updatePageConfig($pageConfigs)

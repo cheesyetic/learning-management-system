@@ -4,26 +4,10 @@
       "name": "Dashboards",
       "icon": "menu-icon tf-icons ti ti-smart-home",
       "slug": "dashboard",
+      "url": "/",
       "badge": [
         "primary",
         "3"
-      ],
-      "submenu": [
-        {
-          "url": "/",
-          "name": "Analytics",
-          "slug": "dashboard-analytics"
-        },
-        {
-          "url": "/dashboard/crm",
-          "name": "CRM",
-          "slug": "dashboard-crm"
-        },
-        {
-          "url": "/dashboard/ecommerce",
-          "name": "eCommerce",
-          "slug": "dashboard-ecommerce"
-        }
       ]
     },
     {

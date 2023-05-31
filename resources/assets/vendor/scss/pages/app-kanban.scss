@@ -38,7 +38,7 @@ $kanban-add-new-board-padding: 0.9375rem;
     // Kanban container
     .kanban-container {
       display: flex;
-      width: max-content !important;
+      justify-content: center;
       .kanban-board {
         width: auto !important;
         height: 100%;
@@ -106,6 +106,7 @@ $kanban-add-new-board-padding: 0.9375rem;
             }
           }
           &:hover {
+            cursor: pointer;
             .kanban-tasks-item-dropdown {
               display: block;
             }

@@ -2,9 +2,9 @@
 $configData = Helper::appClasses();
 @endphp
 <!-- Horizontal Menu -->
-<aside id="layout-menu" class="layout-menu-horizontal menu-horizontal  menu bg-menu-theme flex-grow-0">
+<aside id="layout-menu" class="layout-menu-horizontal menu-horizontal  menu bg-menu-theme flex-grow-0 align-items-center">
   <div class="{{$containerNav}} d-flex h-100">
-    <ul class="menu-inner">
+    <ul class="menu-inner justify-content-center">
       @foreach ($menuData[1]->menu as $menu)
 
       {{-- active menu method --}}
