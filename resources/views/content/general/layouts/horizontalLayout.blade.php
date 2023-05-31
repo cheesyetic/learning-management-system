@@ -48,81 +48,9 @@
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
 
-                    <!-- Horizontal Menu -->
-                    <aside id="layout-menu"
-                        class="layout-menu-horizontal menu-horizontal  menu bg-menu-theme flex-grow-0 align-items-center">
-                        <div class="container-xxl d-flex h-100">
-                            <ul class="menu-inner justify-content-center">
-                                @if (Auth::user()->role == 'teacher')
-                                    <li class="menu-item {{ request()->is('teacher/beranda*') ? 'active' : '' }}">
-                                        <a href="{{ route('teacher.dashboard') }}" class="menu-link">
-                                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                                            <div>Beranda</div>
-                                        </a>
-
-
-                                    </li>
-                                    <li class="menu-item {{ request()->is('teacher/penugasan*') ? 'active' : '' }}">
-                                        <a href="{{ route('teacher.task.index') }}" class="menu-link">
-                                            <i class="menu-icon tf-icons ti ti-checkbox"></i>
-                                            <div>Penugasan</div>
-                                        </a>
-
-
-                                    </li>
-                                    <li class="menu-item {{ request()->is('teacher/hasil-penugasan*') ? 'active' : '' }}">
-                                        <a href="{{ route('teacher.assignment.task.index') }}" class="menu-link">
-                                            <i class="menu-icon tf-icons ti ti-clipboard"></i>
-                                            <div>Hasil Penugasan</div>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item {{ request()->is('teacher/materi*') ? 'active' : '' }}">
-                                        <a href="{{ route('teacher.material.index') }}" class="menu-link">
-                                            <i class="menu-icon tf-icons ti ti-file"></i>
-                                            <div>Materi</div>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item {{ request()->is('teacher/chat*') ? 'active' : '' }}">
-                                        <a href="{{ route('teacher.chat.index') }}" class="menu-link">
-                                            <i class="menu-icon tf-icons ti ti-messages"></i>
-                                            <div>Pesan</div>
-                                        </a>
-                                    </li>
-                                @else
-                                    <li class="menu-item {{ request()->is('student/beranda*') ? 'active' : '' }}">
-                                        <a href="{{ route('student.dashboard') }}" class="menu-link">
-                                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                                            <div>Beranda</div>
-                                        </a>
-
-
-                                    </li>
-                                    <li class="menu-item {{ request()->is('student/penugasan*') ? 'active' : '' }}">
-                                        <a href="{{ route('student.task.index') }}" class="menu-link">
-                                            <i class="menu-icon tf-icons ti ti-checkbox"></i>
-                                            <div>Penugasan</div>
-                                        </a>
-
-
-                                    </li>
-                                    <li class="menu-item {{ request()->is('student/materi*') ? 'active' : '' }}">
-                                        <a href="{{ route('student.material.index') }}" class="menu-link">
-                                            <i class="menu-icon tf-icons ti ti-file"></i>
-                                            <div>Materi</div>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item {{ request()->is('student/chat*') ? 'active' : '' }}">
-                                        <a href="{{ route('student.chat.index') }}" class="menu-link">
-                                            <i class="menu-icon tf-icons ti ti-messages"></i>
-                                            <div>Pesan</div>
-                                        </a>
-                                    </li>
-                                @endif
-
-                            </ul>
-                        </div>
-                    </aside>
-                    <!--/ Horizontal Menu -->
+                    @if ($isMenu)
+                        @include('layouts/sections/menu/horizontalMenu')
+                    @endif
 
                     <!-- Content -->
                     @if ($isFlex)

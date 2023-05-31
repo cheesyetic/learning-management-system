@@ -1,42 +1,79 @@
 {
   "menu": [
     {
+      "role": "teacher",
       "url": "/teacher/beranda",
       "name": "Beranda",
       "icon": "menu-icon tf-icons ti ti-smart-home",
-      "slug": "dashboard"
+      "slug": "teacher.dashboard"
     },
     {
+      "role": "teacher",
       "url": "/teacher/penugasan",
       "name": "Penugasan",
       "icon": "menu-icon tf-icons ti ti-checkbox",
-      "slug": "penugasan-index",
+      "slug": "teacher.task.index",
       "badge": [
         "primary",
         "3"
       ]
     },
     {
+      "role": "teacher",
       "url": "/teacher/hasil-penugasan",
       "name": "Hasil Penugasan",
       "icon": "menu-icon tf-icons ti ti-clipboard",
-      "slug": "penugasan-index",
+      "slug": "teacher.assignment.task.index",
       "badge": [
         "primary",
         "3"
       ]
     },
     {
+      "role": "teacher",
       "url": "/teacher/materi",
       "name": "Materi",
       "icon": "menu-icon tf-icons ti ti-file",
-      "slug": "materi-index"
+      "slug": "teacher.material.index"
     },
     {
+      "role": "teacher",
       "url": "/teacher/chat",
       "name": "Pesan",
       "icon": "menu-icon tf-icons ti ti-messages",
-      "slug": "chat-index"
+      "slug": "teacher.chat.index"
+    },
+    {
+      "role": "student",
+      "url": "/student/beranda",
+      "name": "Beranda",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "slug": "student.dashboard"
+    },
+    {
+      "role": "student",
+      "url": "/student/penugasan",
+      "name": "Penugasan",
+      "icon": "menu-icon tf-icons ti ti-checkbox",
+      "slug": "student.task.index",
+      "badge": [
+        "primary",
+        "3"
+      ]
+    },
+    {
+      "role": "student",
+      "url": "/student/materi",
+      "name": "Materi",
+      "icon": "menu-icon tf-icons ti ti-file",
+      "slug": "student.material.index"
+    },
+    {
+      "role": "student",
+      "url": "/student/chat",
+      "name": "Pesan",
+      "icon": "menu-icon tf-icons ti ti-messages",
+      "slug": "student.chat.index"
     }
   ]
 }

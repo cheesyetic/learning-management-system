@@ -17,7 +17,8 @@
 @if (isset($navbarFull))
     <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
         <a href="{{ url('/') }}" class="app-brand-link gap-2">
-            <img class="app-brand-logo demo" src="https://cdn-icons-png.flaticon.com/512/2021/2021397.png" />
+            <img class="app-brand-logo demo" src="https://cdn-icons-png.flaticon.com/512/2021/2021397.png"
+                style="width: 24px" />
             <span class="app-brand-text demo menu-text fw-bold">{{ config('variables.templateName') }}</span>
         </a>
     </div>
@@ -26,10 +27,11 @@
 <!-- ! Not required for layout-without-menu -->
 @if (!isset($navbarHideToggle))
     <div
-        class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0{{ isset($menuHorizontal) ? ' d-xl-none ' : '' }} {{ isset($contentNavbar) ? ' d-xl-none ' : '' }}">
+        class="layout-menu-toggle navbar-nav d-flex flex-row align-items-xl-center me-3 me-xl-0{{ isset($menuHorizontal) ? ' d-xl-none ' : '' }} {{ isset($contentNavbar) ? ' d-xl-none ' : '' }}">
         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
             <i class="ti ti-menu-2 ti-sm"></i>
         </a>
+
     </div>
 @endif
 
@@ -45,6 +47,11 @@
                 </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
+                <li class="nav-item me-2 me-xl-0">
+                    <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
+                        <i class='ti ti-md'></i>
+                    </a>
+                </li>
                 <li>
                     <a class="dropdown-item" href="{{ route('teacher.profile.index') }}">
                         <div class="d-flex">

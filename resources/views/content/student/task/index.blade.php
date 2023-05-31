@@ -74,9 +74,9 @@
                     </header>
                     <main class="kanban-drag">
                         @if ($unchecked_tasks->isEmpty())
-                            <div class="kanban-item">
-                                <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
-                                    <div class="item-badges fw-bold">
+                            <div class="kanban-item" style="cursor: auto">
+                                <div class="d-flex justify-content-between flex-wrap align-items-center">
+                                    <div class="item-badges m-0">
                                         Belum ada tugas yang kamu kumpulkan nih
                                     </div>
                                 </div>
@@ -115,9 +115,9 @@
                     </header>
                     <main class="kanban-drag">
                         @if ($checked_tasks->isEmpty())
-                            <div class="kanban-item">
-                                <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
-                                    <div class="item-badges fw-bold">
+                            <div class="kanban-item" style="cursor: auto">
+                                <div class="d-flex justify-content-between flex-wrap align-items-center">
+                                    <div class="item-badges m-0">
                                         Belum ada tugas yang sudah dinilai, sabar ya!
                                     </div>
                                 </div>

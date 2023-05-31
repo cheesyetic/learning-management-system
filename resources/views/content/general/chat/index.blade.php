@@ -22,7 +22,7 @@
     <div class="app-chat card overflow-hidden">
         <div class="row g-0">
             <!-- Chat & Contacts -->
-            <div class="col app-chat-contacts app-sidebar flex-grow-0 overflow-hidden border-end" id="app-chat-contacts">
+            <div class="col  app-chat-contacts app-sidebar flex-grow-0 overflow-hidden border-end" id="app-chat-contacts">
                 <div class="sidebar-header">
                     <div class="d-flex align-items-center me-3 me-lg-0">
                         <div class="flex-shrink-0 avatar me-3" style="cursor: default;">
@@ -36,8 +36,8 @@
                                 aria-label="Search..." aria-describedby="basic-addon-search31">
                         </div>
                     </div>
-                    <i class="ti ti-x cursor-pointer mt-2 me-1 d-lg-none d-block position-absolute top-0 end-0" data-overlay
-                        data-bs-toggle="sidebar" data-target="#app-chat-contacts"></i>
+                    <i class="ti ti-x cursor-pointer close-sidebar mt-2 me-1 d-lg-none d-block position-absolute top-0 end-0"
+                        data-overlay data-bs-toggle="sidebar" data-target="#app-chat-contacts"></i>
                 </div>
                 <hr class="container-m-nx m-0">
                 <div class="sidebar-body">
@@ -108,18 +108,32 @@
 
             <!-- Chat History -->
             <!-- If there is no active chat -->
-            <div class="col app-chat-history bg-body" id="chat-not-exist">
+            {{-- <div class="col app-chat-history bg-body d-none" id="chat-not-exist">
                 <div class="d-flex align-items-center h-100">
                     <h4 class="text-center mx-auto">Yuk mulai percakapanmu sekarang juga!</h4>
                 </div>
                 <!-- If there is no active chat -->
-            </div>
+            </div> --}}
             <!-- If there is active chat -->
-            <div class="col app-chat-history bg-body d-none" id="chat-exist">
+            <div class="col app-chat-history bg-body">
                 <div class="chat-history-wrapper">
                     <div class="chat-history-header border-bottom">
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex overflow-hidden align-items-center" id="chat-profile">
+                            <div class="d-flex overflow-hidden align-items-center" id="chat-profile"
+                                style="min-height: 42px">
+                                <i class="ti ti-menu-2 ti-sm cursor-pointer d-lg-none d-block me-2" data-bs-toggle="sidebar"
+                                    data-overlay data-target="#app-chat-contacts"></i>
+                                <div id="chat-not-exist"></div>
+                                <div class="d-flex flex-row overflow-hidden align-items-center d-none" id="chat-exist">
+                                    <div class="flex-shrink-0 avatar">
+                                        <img id="chat_image" src="${photo}" alt="Avatar" class="rounded-circle"
+                                            data-bs-toggle="sidebar" data-overlay data-target="#app-chat-sidebar-right">
+                                    </div>
+                                    <div class="chat-contact-info flex-grow-1 ms-2">
+                                        <h6 class="m-0" id="chat_username">USERNAME</h6>
+                                    </div>
+                                    <div id="chat_refresh"></div>
+                                </div>
                                 <!-- Chat Profile from Javascript -->
                             </div>
                             <div>
@@ -130,19 +144,22 @@
                     <div class="chat-history-body bg-body">
                         <ul class="list-unstyled chat-history" id="chat-history">
                             <!-- Chat messages -->
+                            <h4 class="text-center mx-auto">Yuk mulai percakapanmu sekarang juga!</h4>
                         </ul>
                     </div>
                     <!-- Chat message form -->
                     <div class="chat-history-footer shadow-sm">
-                        <form class="d-flex justify-content-between align-items-center">
-                            <input class="form-control message-input border-0 me-3 shadow-none" id="message-input"
-                                placeholder="Masukkan pesan anda disini...">
-                        </form>
-                        <div class="message-actions d-flex justify-content-between align-items-center">
-                            <button class="btn btn-primary d-flex" id="send-msg-btn" onclick="postChat()">
-                                <i class="ti ti-send me-md-1 me-0"></i>
-                                <span class="align-middle d-md-inline-block d-none">Send</span>
-                            </button>
+                        <div class="form-send-message d-flex justify-content-between align-items-center">
+                            <form class="w-100">
+                                <input class="form-control message-input border-0 me-3 shadow-none" id="message-input"
+                                    placeholder="Masukkan pesan anda disini...">
+                            </form>
+                            <div class="message-actions d-flex justify-content-between align-items-center">
+                                <button class="btn btn-primary d-flex" id="send-msg-btn" onclick="postChat()">
+                                    <i class="ti ti-send me-md-1 me-0"></i>
+                                    <span class="align-middle d-md-inline-block d-none">Send</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -183,28 +200,19 @@
                 sendMsgBtn.setAttribute("data-id", id);
 
                 //Get Profile
-                var chatProfile = document.getElementById("chat-profile");
-                chatProfile.innerHTML = "";
+                var chatRefreshButton = document.getElementById("chat_refresh");
+                var chatImage = document.getElementById("chat_image");
+                var chatUsername = document.getElementById("chat_username");
+                // Append chat profile HTML to chatRefreshButton element
+                chatRefreshButton.innerHTML = `
+                <div class="ms-2 cursor-pointer text-primary" onclick="getChat(${id})">
+                    Refresh pesan
+                    <i class="ti ti-rotate-clockwise rotate-180 scaleX-n1-rtl"></i>
+                </div>
+                `;
+                chatImage.src = photo;
+                chatUsername.innerHTML = userName;
 
-                // Create chat profile HTML
-                var chatProfileHtml = `
-                <i class="ti ti-menu-2 ti-sm cursor-pointer d-lg-none d-block me-2" data-bs-toggle="sidebar"
-                    data-overlay data-target="#app-chat-contacts"></i>
-                <div class="flex-shrink-0 avatar">
-                    <img src="${photo}" alt="Avatar"
-                        class="rounded-circle" data-bs-toggle="sidebar" data-overlay
-                        data-target="#app-chat-sidebar-right">
-                </div>
-                <div class="chat-contact-info flex-grow-1 ms-2">
-                    <h6 class="m-0">${userName}</h6>
-                </div>
-                <div class="ms-2">
-                    <i class="ti ti-rotate-clockwise rotate-180 scaleX-n1-rtl cursor-pointer" onclick="getChat(${id})"></i>
-                </div>
-            `;
-
-                // Append chat profile HTML to chatProfile element
-                chatProfile.innerHTML = chatProfileHtml;
 
                 var chatHistory = document.getElementById("chat-history");
                 chatHistory.innerHTML = "";

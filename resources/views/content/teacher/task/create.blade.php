@@ -57,7 +57,7 @@
                     value="{{ old('deadline') }}">
             </div>
             <div class="form-group col-lg-6 mx-auto mt-2">
-                <label for="file">Upload Gambar/Dokumen Pendukung (opsional)</label>
+                <label for="file">Upload Dokumen Pendukung (opsional)</label>
                 <input type="file" id="file" accept=".doc,.docx,.pdf,.xls,.xlsx,.csv,.ppt,.pptx"
                     class="form form-control" name="file">
             </div>

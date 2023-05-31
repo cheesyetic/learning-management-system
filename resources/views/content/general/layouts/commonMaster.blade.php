@@ -32,7 +32,6 @@
 
     <!-- Include Scripts for customizer, helper, analytics, config -->
     @include('layouts/sections/scriptsIncludes')
-    @stack('scripts')
 </head>
 
 <body>
@@ -46,7 +45,7 @@
 
     <!-- Include Scripts -->
     @include('layouts/sections/scripts')
-
+    @stack('scripts')
 </body>
 
 </html>
