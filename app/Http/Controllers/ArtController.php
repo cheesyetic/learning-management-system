@@ -19,10 +19,24 @@ class ArtController extends Controller
             $art->diff = $created_at->diffForHumans();
         }
 
-
         return view('content.general.dashboard', compact('arts'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
+
+    public function artApi()
+    {
+        $arts = Art::with('comments', 'user')->latest()->paginate(5);
+
+        foreach ($arts as $art) {
+            $art->is_liked = $art->likes()->where('user_id', auth()->user()->id)->exists();
+            $created_at = Carbon::parse($art->created_at)->locale('id');
+            $art->diff = $created_at->diffForHumans();
+        }
+
+        return response()->json($arts, 200);
+    }
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -47,13 +61,7 @@ class ArtController extends Controller
 
         Art::create($input);
 
-        if (auth()->user()->role == 'student') {
-            $route = 'student.dashboard';
-        } else {
-            $route = 'teacher.dashboard';
-        }
-
-        return redirect()->route($route)
+        return redirect()->route('dashboard')
             ->with('success', 'Berhasil mengunggah karya.');
     }
 
@@ -66,20 +74,14 @@ class ArtController extends Controller
 
         $art->update($request->all());
 
-        if (auth()->user()->role == 'student') {
-            $route = 'student.dashboard';
-        } else {
-            $route = 'teacher.dashboard';
-        }
-
-        return redirect()->route($route)
+        return redirect()->route('dashboard')
             ->with('success', 'Berhasil memperbarui karya.');
     }
 
     public function destroy(Art $art)
     {
         if (auth()->user()->id != $art->user_id) {
-            return redirect()->route('student.dashboard')
+            return redirect()->route('dashboard')
                 ->with('error', 'Kamu tidak memiliki hak untuk menghapus karya ini.');
         }
 
@@ -89,13 +91,7 @@ class ArtController extends Controller
 
         $art->delete();
 
-        if (auth()->user()->role == 'student') {
-            $route = 'student.dashboard';
-        } else {
-            $route = 'teacher.dashboard';
-        }
-
-        return redirect()->route($route)
+        return redirect()->route('dashboard')
             ->with('success', 'Karya berhasil dihapus.');
     }
 
@@ -113,13 +109,7 @@ class ArtController extends Controller
 
         Comment::create($request->all());
 
-        if (auth()->user()->role == 'student') {
-            $route = 'student.dashboard';
-        } else {
-            $route = 'teacher.dashboard';
-        }
-
-        return redirect()->route($route)
+        return redirect()->route('dashboard')
             ->with('success', 'Reply posted successfully.');
     }
 }

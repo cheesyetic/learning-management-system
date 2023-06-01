@@ -26,14 +26,14 @@
 @section('content')
     <div class="app-kanban">
         <div class="kanban-wrapper ps" style="height: 100%">
-            <div class="kanban-container">
+            <div class="kanban-container flex-column flex-lg-row">
                 <div class="kanban-board" style="width: 250px; margin-left: 15px; margin-right: 15px;">
                     <header class="kanban-board-header">
                         <div class="kanban-title-board">Belum Terkumpul</div>
                     </header>
                     <div class="kanban-drag">
                         @if ($unassigned_tasks->isEmpty())
-                            <div class="kanban-item">
+                            <div class="kanban-item w-100">
                                 <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
                                     <div class="item-badges fw-bold">
                                         Selamat! Tugasmu sudah selesai semua!
@@ -44,7 +44,7 @@
                             @foreach ($unassigned_tasks as $task)
                                 <a href="{{ route('student.task.show', $task->uuid) }}"
                                     class="text-decoration-none text-dark" style="--bs-text-opacity: none;">
-                                    <div class="kanban-item">
+                                    <div class="kanban-item w-100">
                                         <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
                                             <div class="item-badges fw-bold">
                                                 {{ $task->title }}
@@ -74,7 +74,7 @@
                     </header>
                     <main class="kanban-drag">
                         @if ($unchecked_tasks->isEmpty())
-                            <div class="kanban-item" style="cursor: auto">
+                            <div class="kanban-item w-100" style="cursor: auto">
                                 <div class="d-flex justify-content-between flex-wrap align-items-center">
                                     <div class="item-badges m-0">
                                         Belum ada tugas yang kamu kumpulkan nih
@@ -85,7 +85,7 @@
                             @foreach ($unchecked_tasks as $task)
                                 <a href="{{ route('student.task.show', $task->uuid) }}"
                                     class="text-decoration-none text-dark" style="--bs-text-opacity: none;">
-                                    <div class="kanban-item">
+                                    <div class="kanban-item w-100">
                                         <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
                                             <div class="item-badges fw-bold">
                                                 {{ $task->title }}
@@ -115,7 +115,7 @@
                     </header>
                     <main class="kanban-drag">
                         @if ($checked_tasks->isEmpty())
-                            <div class="kanban-item" style="cursor: auto">
+                            <div class="kanban-item w-100" style="cursor: auto">
                                 <div class="d-flex justify-content-between flex-wrap align-items-center">
                                     <div class="item-badges m-0">
                                         Belum ada tugas yang sudah dinilai, sabar ya!
@@ -126,7 +126,7 @@
                             @foreach ($checked_tasks as $task)
                                 <a href="{{ route('student.task.show', $task->uuid) }}"
                                     class="text-decoration-none text-dark" style="--bs-text-opacity: none;">
-                                    <div class="kanban-item">
+                                    <div class="kanban-item w-100">
                                         <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
                                             <div class="item-badges fw-bold">
                                                 {{ $task->title }}

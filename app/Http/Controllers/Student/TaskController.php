@@ -80,9 +80,10 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
-            'file' => 'required|mimes:jpg,png,svg,pdf,doc,docx|max:5012'
+            'file' => 'required|mimes:jpg,png,svg,pdf,doc,docx|max:5012',
+            'task_id' => 'required'
         ]);
 
         $file = $request->file('file');

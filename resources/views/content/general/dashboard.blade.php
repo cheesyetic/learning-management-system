@@ -57,9 +57,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('teacher.art.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('art.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-
                             <div class="mb-3">
                                 <label for="postTitle" class="form-label">Judul</label>
                                 <input required type="text" class="form-control" name="title" id="postTitle">
@@ -88,152 +87,257 @@
         </div>
 
         <!-- Art -->
+        {{-- Delete form submitted when user click delete on a delete button --}}
+        <form id="delete-form" action="#" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
         @foreach ($arts as $art)
-            <div class="col-md">
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            @if ($art->category == 1)
-                                <img class="card-img card-img-left" style="height: 100%" src="{{ $art->file }}"
-                                    alt="Card image" />
-                            @else
-                                <video controls class="card-img card-img-left" style="height: 100%"
-                                    src="{{ $art->file }}">
-                                </video>
-                            @endif
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                @if ($art->user_id == Auth::user()->id)
-                                    <div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
-                                        <button class="btn bg-transparent" type="button" id="dropdownMenuButton"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                data-bs-target="#editArtModal-{{ $art->id }}">Ubah</a>
-                                            <a class="dropdown-item" href="{{ route('teacher.art.destroy', $art->id) }}"
-                                                onclick="event.preventDefault();
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        @if ($art->category == 1)
+                            <img class="card-img card-img-left" style="height: 100%" src="{{ $art->file }}"
+                                alt="Card image" />
+                        @else
+                            <video controls class="card-img card-img-left" style="height: 100%" src="{{ $art->file }}">
+                            </video>
+                        @endif
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            @if ($art->user_id == Auth::user()->id)
+                                <div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
+                                    <button class="btn bg-transparent" type="button" id="dropdownMenuButton"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#editArtModal"
+                                            onclick="edit_modal({{ $art }})">Ubah</a>
+                                        <a class="dropdown-item" href="{{ route('art.destroy', $art->id) }}"
+                                            onclick="event.preventDefault();
                                                     if(confirm('Apa kamu yakin ingin menghapus karyamu?')){
+                                                    document.getElementById('delete-form').action = '{{ route('art.destroy', $art->id) }}';
                                                     document.getElementById('delete-form').submit();
                                                     }">
-                                                Hapus
-                                            </a>
-
-                                            <form id="delete-form" action="{{ route('teacher.art.destroy', $art->id) }}"
-                                                method="POST" style="display: none;">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-
-                                        </div>
+                                            Hapus
+                                        </a>
                                     </div>
-                                @endif
-                                <h5 class="card-title">{{ $art->title }}</h5>
-                                <p class="card-text">
-                                    {{ $art->caption }}
-                                </p>
-                                <p class="card-text"><small class="text-muted">Diunggah {{ $art->diff }}</small></p>
-                                @if ($art->is_liked)
-                                    <button type="button" id="btnUnlike-{{ $art->id }}"
-                                        class="btn btn-primary btn-sm" onclick="unlike({{ $art->id }})"><i
-                                            class="fas fa-thumbs-down" id="thumbs-down-{{ $art->id }}"></i></button>
-                                @else
-                                    <button type="button" id="btnLike-{{ $art->id }}"
-                                        class="btn btn-primary btn-sm" onclick="like({{ $art->id }})"><i
-                                            class="fas fa-thumbs-up" id="thumbs-up-{{ $art->id }}"></i></button>
-                                @endif
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#commentModal" onclick="showComments({{ $art->id }})"><i
-                                        class="fas fa-comment"></i></button>
-                                <br>
-                                <br>
-                                <span class="like-count" data-art-id="{{ $art->id }}">{{ $art->like }}</span>
-                                Suka
-                                <span class="like-count ms-1"
-                                    data-art-id="comment-{{ $art->id }}">{{ $art->comment }}</span>
-                                Komentar
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" style="z-index: 99999" id="commentModal" tabindex="-1"
-                aria-labelledby="commentModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="commentModalLabel">Berikan komentarmu</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="comment-list" id="comment-list">
-                                <!-- The list of comments will be displayed here -->
-                            </div>
-                            <hr>
-                            <form>
-                                <div class="mb-3">
-                                    <label for="commentText" class="form-label">Comment</label>
-                                    <textarea class="form-control" id="commentText" rows="3"></textarea>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onclick="postComment()"
-                                data-post-id="{{ $art->id }}">Add Comment</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" style="z-index: 99999" id="editArtModal-{{ $art->id }}" tabindex="-1"
-                aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Ubah Informasi Karya</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="editArtForm" action="{{ route('teacher.art.update', $art->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-
-                                <div class="mb-3">
-                                    <label for="editTitle" class="form-label">Judul</label>
-                                    <input type="text" class="form-control" id="editTitle" name="title"
-                                        value="{{ $art->title }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="editCaption" class="form-label">Caption</label>
-                                    <textarea class="form-control" id="editCaption" name="caption">{{ $art->caption }}</textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                            </form>
+                            @endif
+                            <h5 class="card-title">{{ $art->title }}</h5>
+                            <p class="card-text">
+                                {{ $art->caption }}
+                            </p>
+                            <p class="card-text"><small class="text-muted">Diunggah {{ $art->diff }}</small></p>
+                            @if ($art->is_liked)
+                                <button type="button" id="btnUnlike-{{ $art->id }}" class="btn btn-primary btn-sm"
+                                    onclick="unlike({{ $art->id }})"><i class="fas fa-thumbs-down"
+                                        id="thumbs-down-{{ $art->id }}"></i></button>
+                            @else
+                                <button type="button" id="btnLike-{{ $art->id }}" class="btn btn-primary btn-sm"
+                                    onclick="like({{ $art->id }})"><i class="fas fa-thumbs-up"
+                                        id="thumbs-up-{{ $art->id }}"></i></button>
+                            @endif
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#commentModal" onclick="showComments({{ $art->id }})"><i
+                                    class="fas fa-comment"></i></button>
+                            <br>
+                            <br>
+                            <span class="like-count" data-art-id="{{ $art->id }}">{{ $art->like }}</span>
+                            Suka
+                            <span class="like-count ms-1"
+                                data-art-id="comment-{{ $art->id }}">{{ $art->comment }}</span>
+                            Komentar
                         </div>
                     </div>
                 </div>
             </div>
         @endforeach
+        <div id="cardContainer"></div>
+        <button class="btn btn-primary" id="loadMoreButton" onclick="load_more()">Load More</button>
+
+        <div class="modal fade" style="z-index: 99999" id="commentModal" tabindex="-1"
+            aria-labelledby="commentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="commentModalLabel">Berikan komentarmu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="comment-list" id="comment-list">
+                            <!-- The list of comments will be displayed here -->
+                        </div>
+                        <hr>
+                        <form>
+                            <div class="mb-3">
+                                <label for="commentText" class="form-label">Comment</label>
+                                <textarea class="form-control" id="commentText" rows="3"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="postComment()"
+                            data-post-id="{{ $art->id }}">Add Comment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" style="z-index: 99999" id="editArtModal" tabindex="-1"
+            aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Ubah Informasi Karya</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editArtForm" action="#" method="POST">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="mb-3">
+                                <label for="editTitle" class="form-label">Judul</label>
+                                <input type="text" class="form-control" id="editTitle" name="title"
+                                    value="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editCaption" class="form-label">Caption</label>
+                                <textarea class="form-control" id="editCaption" name="caption"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- End of Art -->
         <button type="button"
             class="btn btn-icon btn-outline-primary rounded-circle btn-lg position-fixed bottom-0 end-0 m-4"
             data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="fas fa-plus"></i></button>
-        @if ($arts->isNotEmpty())
+        {{-- @if ($arts->isNotEmpty())
             <div class="d-flex justify-content-center mt-4">
                 {!! $arts->links('pagination.custom') !!}
             </div>
-        @endif
+        @endif --}}
     </div>
     <!-- End of Content -->
 @endsection
 
 <script script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+@push('scripts')
+    <script>
+        // Global variables
+        let pageNumber = 2; // Initial page number
+        const apiUrl = '/api/art'; // Replace with your API endpoint URL
+
+        // Function to fetch data from the API
+        async function fetchData() {
+            const response = await fetch(`${apiUrl}?page=${pageNumber}`);
+            const data = await response.json();
+            return data;
+        }
+
+        // Function to create a new card element
+        function createCardElement(cardData) {
+            const cardElement = document.createElement('div');
+
+            const art_asset = cardData.category == 1 ?
+                `<img class="card-img card-img-left" style="height: 100%" src="{{ $art->file }}" alt="Card image" />` :
+                ` <video controls class="card-img card-img-left" style="height: 100%" src="{{ $art->file }}"></video>`;
+            const art_crud = cardData.user_id == {{ auth()->user()->id }} ?
+                `<div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
+                    <button class="btn bg-transparent" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                            data-bs-target="#editArtModal"
+                            onclick='edit_modal(${JSON.stringify(cardData)})''>Ubah</a>
+                        <a class="dropdown-item"
+                            onclick="event.preventDefault();
+                                    if(confirm('Apa kamu yakin ingin menghapus karyamu?')){
+                                    document.getElementById('delete-form').action = '{{ route('art.destroy', '') }} + '/' + ${cardData.id}';
+                                    document.getElementById('delete-form').submit();
+                                    }">
+                            Hapus
+                        </a>
+                    </div>
+                </div>` : ``;
+            const art_like = cardData.is_liked ?
+                `<button type="button" id="btnUnlike-${cardData.id}" class="btn btn-primary btn-sm"
+                onclick="unlike(${cardData.id})"><i class="fas fa-thumbs-down"
+                    id="thumbs-down-${cardData.id}"></i></button>` :
+                `<button type="button" id="btnLike-${cardData.id}" class="btn btn-primary btn-sm"
+                onclick="like(${cardData.id})"><i class="fas fa-thumbs-up"
+                    id="thumbs-up-${cardData.id}"></i></button>`;
+
+            cardElement.innerHTML = `
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        ${art_asset}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            ${art_crud}
+                            <h5 class="card-title">${cardData.title}</h5>
+                            <p class="card-text">
+                                ${cardData.caption}
+                            </p>
+                            <p class="card-text"><small class="text-muted">Diunggah ${cardData.diff}</small></p>
+                            ${art_like}
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#commentModal" onclick="showComments(${cardData.id})"><i
+                                    class="fas fa-comment"></i></button>
+                            <br>
+                            <br>
+                            <span class="like-count" data-art-id="${cardData.id}">${cardData.like}</span>
+                            Suka
+                            <span class="like-count ms-1"
+                                data-art-id="comment-${cardData.id}">${cardData.comment}</span>
+                            Komentar
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            return cardElement;
+        }
+
+        function load_more() {
+            // disable this button
+            const btn_load = document.getElementById('loadMoreButton')
+            btn_load.disabled = true;
+            fetchData().then((data) => {
+                data.data.forEach((cardData) => {
+                    const cardElement = createCardElement(cardData);
+                    document.getElementById('cardContainer').appendChild(cardElement);
+                });
+                btn_load.disabled = false;
+                if (data.last_page == pageNumber || data.next_page_url) {
+                    btn_load.style.setProperty('display', 'none', 'important');
+                }
+                pageNumber++; // Increment the page number for the next request
+            });
+        }
+    </script>
+@endpush
 
 <script>
+    function edit_modal(art) {
+        console.log(art);
+        document.getElementById('editTitle').value = art.title;
+        document.getElementById('editCaption').innerHTML = art.caption;
+        document.getElementById('editArtForm').action = "{{ route('art.update', '') }}" + '/' + art.id;
+    }
+
     function showComments(id) {
         var token = '{{ session('auth_token') }}';
         // Make an AJAX call to fetch the comments for the post

@@ -26,15 +26,16 @@ use App\Http\Controllers\Teacher\TaskController as TeacherTaskController;
 */
 
 Route::middleware(['auth'])->group(function () {
+    //Dashboard
+    Route::get('/', [ArtController::class, 'index'])->name('dashboard');
+    Route::get('beranda', [ArtController::class, 'index'])->name('dashboard');
+    Route::post('beranda', [ArtController::class, 'store'])->name('art.store');
+    Route::put('beranda/{art}', [ArtController::class, 'update'])->name('art.update');
+    Route::delete('beranda/{art}', [ArtController::class, 'destroy'])->name('art.destroy');
+    Route::get('api/art', [ArtController::class, 'artApi'])->name('api.art');
+
     Route::middleware('auth.student')->group(function () {
         Route::group(['prefix' => 'student', 'as' => 'student.'], function () {
-            //Dashboard
-            Route::get('/', [ArtController::class, 'index'])->name('dashboard');
-            Route::get('beranda', [ArtController::class, 'index'])->name('dashboard');
-            Route::post('beranda', [ArtController::class, 'store'])->name('art.store');
-            Route::put('beranda/{art}', [ArtController::class, 'update'])->name('art.update');
-            Route::delete('beranda/{art}', [ArtController::class, 'destroy'])->name('art.destroy');
-
             //Task
             Route::get('penugasan', [TaskController::class, 'index'])->name('task.index');
             Route::get('penugasan-semua/{category}', [TaskController::class, 'all'])->name('task.all');
@@ -50,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('materi/{material}', [MaterialController::class, 'show'])->name('material.show');
             Route::get('materi/{file}/download', [MaterialController::class, 'download'])->name('material.download');
 
-            //Chat 
+            //Chat
             Route::get('chat', [ChatController::class, 'index'])->name('chat.index');
 
             //Profile
@@ -63,13 +64,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('auth.teacher')->group(function () {
         Route::group(['prefix' => 'teacher', 'as' => 'teacher.'], function () {
-            //Dashboard
-            Route::get('/', [ArtController::class, 'index'])->name('dashboard');
-            Route::get('beranda', [ArtController::class, 'index'])->name('dashboard');
-            Route::post('beranda', [ArtController::class, 'store'])->name('art.store');
-            Route::put('beranda/{art}', [ArtController::class, 'update'])->name('art.update');
-            Route::delete('beranda/{art}', [ArtController::class, 'destroy'])->name('art.destroy');
-
             //Task
             Route::get('penugasan', [TeacherTaskController::class, 'index'])->name('task.index');
             Route::get('penugasan/create', [TeacherTaskController::class, 'create'])->name('task.create');
