@@ -18,7 +18,7 @@ class TeacherMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->role != 'teacher') {
-            return redirect()->route('teacher.dashboard');
+            return redirect()->route('dashboard');
         } else return $next($request);
     }
 }

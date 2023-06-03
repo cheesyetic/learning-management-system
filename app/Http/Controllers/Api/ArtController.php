@@ -95,6 +95,7 @@ class ArtController extends Controller
             'success' => true,
             'message' => 'Art Commented Successfully',
             'data' => $comment,
+            'count' => $art->comment,
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -103,6 +104,7 @@ class ArtController extends Controller
     public function delete_comment($id)
     {
         $comment = Comment::findOrFail($id);
+        $art = '';
 
         if ($comment->parent_id == null) {
             $art = Art::findOrFail($comment->art_id);
@@ -121,6 +123,7 @@ class ArtController extends Controller
             'success' => true,
             'message' => 'Art Comment Deleted Successfully',
             'data' => $comment,
+            'count' => $art->comment,
         ];
 
         return response()->json($response, Response::HTTP_OK);

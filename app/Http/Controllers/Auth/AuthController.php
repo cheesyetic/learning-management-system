@@ -74,11 +74,7 @@ class AuthController extends Controller
 
         Auth::guard('web')->login($user, true);
 
-        if ($user->role == 'student') {
-            return redirect()->route('student.dashboard');
-        } else {
-            return redirect()->route('teacher.dashboard');
-        }
+        return redirect()->route('dashboard');
     }
 
     public function login(Request $request)
@@ -93,11 +89,7 @@ class AuthController extends Controller
         if (!$user) return redirect()->back()->with('errors', 'Email tidak ditemukan!');
 
         if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            if (auth()->user()->role == 'student') {
-                return redirect()->route('student.dashboard');
-            } else {
-                return redirect()->route('teacher.dashboard');
-            }
+            return redirect()->route('dashboard');
         }
 
         return redirect()->back()->with('errors', 'Password salah!');

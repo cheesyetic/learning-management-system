@@ -17,7 +17,7 @@ class NotAuthenticated
     public function handle(Request $request, Closure $next)
     {
         if (auth()->check()) {
-            return redirect()->route('student.dashboard');
+            return redirect()->route('dashboard');
         } else return $next($request);
     }
 }
