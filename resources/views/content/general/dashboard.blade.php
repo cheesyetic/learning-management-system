@@ -199,6 +199,7 @@
                 </div>
             </div>
         </div>
+        <!-- End of Art -->
         <div class="modal fade" style="z-index: 99999" id="editArtModal" tabindex="-1"
             aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -227,15 +228,8 @@
                 </div>
             </div>
         </div>
-        <!-- End of Art -->
-        <button type="button"
-            class="btn btn-icon btn-outline-primary rounded-circle btn-lg position-fixed bottom-0 end-0 m-4"
-            data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="fas fa-plus"></i></button>
-        {{-- @if ($arts->isNotEmpty())
-            <div class="d-flex justify-content-center mt-4">
-                {!! $arts->links('pagination.custom') !!}
-            </div>
-        @endif --}}
+        <button type="button" class="btn btn-outline-primary bg-white btn-lg position-fixed bottom-0 end-0 m-4"
+            data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="me-2 fas fa-plus"></i>Unggah Karya</button>
     </div>
     <!-- End of Content -->
 @endsection
@@ -340,7 +334,7 @@
 
 <script>
     function edit_modal(art) {
-        console.log(art);
+        // console.log(art);
         document.getElementById('editTitle').value = art.title;
         document.getElementById('editCaption').innerHTML = art.caption;
         document.getElementById('editArtForm').action = "{{ route('art.update', '') }}" + '/' + art.id;
@@ -455,8 +449,6 @@
                 'Authorization': 'Bearer ' + token
             },
             success: function(response) {
-                console.log(response);
-                console.log('id', response.data.art_id);
                 showComments(response.data.art_id);
                 $('[data-art-id="comment-' + response.data.art_id + '"]').text(response.count);
             },
@@ -488,7 +480,7 @@
                 });
             }
         });
-        console.log('sini-like');
+        // console.log('sini-like');
     }
 
     function likeAfter(id) {
@@ -512,7 +504,7 @@
                 });
             }
         });
-        console.log('sini-likeaft');
+        // console.log('sini-likeaft');
     }
 
     function unlike(id) {
@@ -535,7 +527,7 @@
                 });
             }
         });
-        console.log('sini-unlike');
+        // console.log('sini-unlike');
     }
 
     function unlikeAfter(id) {
@@ -558,7 +550,7 @@
                 });
             }
         });
-        console.log('sini-unlikeafter');
+        // console.log('sini-unlikeafter');
     }
 </script>
 

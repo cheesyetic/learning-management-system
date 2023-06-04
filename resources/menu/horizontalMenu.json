@@ -2,10 +2,10 @@
   "menu": [
     {
       "role": "teacher",
-      "url": "/teacher/beranda",
+      "url": "/beranda",
       "name": "Beranda",
       "icon": "menu-icon tf-icons ti ti-smart-home",
-      "slug": "teacher.dashboard"
+      "slug": "dashboard"
     },
     {
       "role": "teacher",
@@ -45,10 +45,10 @@
     },
     {
       "role": "student",
-      "url": "/student/beranda",
+      "url": "/beranda",
       "name": "Beranda",
       "icon": "menu-icon tf-icons ti ti-smart-home",
-      "slug": "student.dashboard"
+      "slug": "dashboard"
     },
     {
       "role": "student",
