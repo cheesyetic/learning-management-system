@@ -170,7 +170,7 @@
             </div>
         @endforeach
         <div id="cardContainer"></div>
-        <button class="btn btn-primary" id="loadMoreButton" onclick="load_more()">Load More</button>
+        <button class="btn btn-primary" id="loadMoreButton" onclick="load_more()">Muat Lebih Banyak Karya</button>
 
         <div class="modal fade" style="z-index: 99999" id="commentModal" tabindex="-1"
             aria-labelledby="commentModalLabel" aria-hidden="true">
@@ -178,23 +178,22 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="commentModalLabel">Berikan komentarmu</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                     </div>
                     <div class="modal-body">
                         <div class="comment-list mb-2 p-4" id="comment-list">
                         </div>
                         <form>
                             <div class="mb-3">
-                                <label for="commentText" class="form-label">Comment</label>
+                                <label for="commentText" class="form-label">Komentar</label>
                                 <textarea class="form-control" id="commentText" rows="3"></textarea>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         <button type="button" id="post_comment_btn" class="btn btn-primary" onclick="postComment()"
-                            data-post-id="">Add
-                            Comment</button>
+                            data-post-id="">Tambah Komentar</button>
                     </div>
                 </div>
             </div>

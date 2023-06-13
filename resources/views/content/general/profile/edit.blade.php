@@ -59,7 +59,9 @@
                         @endphp
                     </div>
                 @endif
-                <form method="POST" enctype="multipart/form-data" action="{{ route('teacher.profile.update') }}">
+                <form method="POST" enctype="multipart/form-data"
+                    @if (Auth::user()->role == 'student') action="{{ route('student.profile.update') }}"
+                        @else action="{{ route('teacher.profile.update') }} @endif">
                     @csrf
                     @method('PUT')
 

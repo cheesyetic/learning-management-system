@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix' => 'student', 'as' => 'student.'], function () {
             //Task
             Route::get('penugasan', [TaskController::class, 'index'])->name('task.index');
-            Route::get('penugasan-semua/{category}', [TaskController::class, 'all'])->name('task.all');
+            Route::get('penugasan/semua/{category}', [TaskController::class, 'all'])->name('task.all');
             Route::get('penugasan/{task}', [TaskController::class, 'show'])->name('task.show');
             Route::get('penugasan/{task}/edit', [TaskController::class, 'edit'])->name('task.edit');
             Route::post('penugasan', [TaskController::class, 'store'])->name('task.store');
@@ -80,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('hasil-penugasan/{task}', [AssignmentController::class, 'index'])->name('assignment.index');
             Route::get('hasil-penugasan/{assignment}/edit', [AssignmentController::class, 'edit'])->name('assignment.edit');
             Route::get('hasil-penugasan/{assignment}/show', [AssignmentController::class, 'show'])->name('assignment.show');
-            Route::put('hasil-penugasan', [AssignmentController::class, 'update'])->name('assignment.update');
+            Route::put('hasil-penugasan/{assignment}/update', [AssignmentController::class, 'update'])->name('assignment.update');
             Route::get('hasil-penugasan/{file}/download', [AssignmentController::class, 'download'])->name('assignment.download');
 
             //Material

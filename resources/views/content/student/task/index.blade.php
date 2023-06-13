@@ -83,7 +83,7 @@
                             </div>
                         @else
                             @foreach ($unchecked_tasks as $task)
-                                <a href="{{ route('student.task.show', $task->uuid) }}"
+                                <a href="{{ route('student.task.edit', $task->uuid) }}"
                                     class="text-decoration-none text-dark" style="--bs-text-opacity: none;">
                                     <div class="kanban-item w-100">
                                         <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">

@@ -12,7 +12,7 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::where('status', 1)->get();
         foreach ($tasks as $task) {
             $assignment = $task->assignments()->where('user_id', auth()->user()->id)->first();
             if ($assignment != null) {
@@ -30,16 +30,16 @@ class TaskController extends Controller
             $task->description = substr($task->description, 0, 100) . '...';
             $task->uuid = Crypt::encrypt($task->id);
         }
-        $unassigned_tasks = $tasks->where('assign_status', '==', 0)->sortByDesc('updated_at')->slice(0, 3);
-        $unchecked_tasks = $tasks->where('assign_status', '==', 1)->sortByDesc('updated_at')->slice(0, 3);
-        $checked_tasks = $tasks->where('assign_status', '==', 2)->sortByDesc('updated_at')->slice(0, 3);
+        $unassigned_tasks = $tasks->where('assign_status', '==', 0)->sortByDesc('deadline')->slice(0, 3);
+        $unchecked_tasks = $tasks->where('assign_status', '==', 1)->sortByDesc('deadline')->slice(0, 3);
+        $checked_tasks = $tasks->where('assign_status', '==', 2)->sortByDesc('deadline')->slice(0, 3);
 
         return view('content.student.task.index', compact('unassigned_tasks', 'unchecked_tasks', 'checked_tasks'));
     }
 
     public function all($category)
     {
-        $tasks = Task::all();
+        $tasks = Task::where('status', 1)->get();
         foreach ($tasks as $task) {
             $assignment = $task->assignments()->where('user_id', auth()->user()->id)->first();
             if ($assignment != null) {
@@ -57,7 +57,7 @@ class TaskController extends Controller
             $task->description = substr($task->description, 0, 100) . '...';
             $task->uuid = Crypt::encrypt($task->id);
         }
-        $tasks = $tasks->where('assign_status', '==', $category)->sortByDesc('updated_at')->slice(0, 3);
+        $tasks = $tasks->where('assign_status', '==', $category)->sortByDesc('deadline')->slice(0, 3);
 
         return view('content.student.task.all', compact('tasks', 'category'));
     }
@@ -67,13 +67,16 @@ class TaskController extends Controller
         $task = Task::where('id', Crypt::decrypt($id))->first();
         $deadline = Carbon::parse($task->deadline)->translatedFormat('l, j F Y H:i:s');
         $task->deadline = $deadline;
+        $assignment = $task->assignments()->where('user_id', auth()->user()->id)->first();
 
-        return view('content.student.task.show', compact('task'));
+        return view('content.student.task.show', compact('task', 'assignment'));
     }
 
     public function edit($id)
     {
         $task = Task::where('id', Crypt::decrypt($id))->first();
+        $deadline = Carbon::parse($task->deadline)->translatedFormat('l, j F Y H:i:s');
+        $task->deadline = $deadline;
         $assignment = $task->assignments()->where('user_id', auth()->user()->id)->first();
         return view('content.student.task.edit', compact('task', 'assignment'));
     }
@@ -88,8 +91,8 @@ class TaskController extends Controller
 
         $file = $request->file('file');
         $fileName = time() . '@@' . $request->file->getClientOriginalName();
-        $file->storeAs('uploads/' . $request->task_id, $fileName, 'public');
         $fileName = $request->task_id . '-' . $fileName;
+        $file->storeAs('uploads', $fileName, 'public');
 
         $task = Task::where('id', $request->task_id)->first();
         if (Carbon::now() > $task->deadline) {
@@ -106,10 +109,10 @@ class TaskController extends Controller
             'task_id' => $request->task_id
         ]);
 
-        return redirect()->back()->with('success', 'Penugasan berhasil dikumpulkan!');
+        return redirect()->route('student.task.index')->with('success', 'Penugasan berhasil dikumpulkan!');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Task $task)
     {
         $request->validate([
             'file' => 'required|mimes:jpg,png,svg,pdf,doc,docx|max:5012'
@@ -117,10 +120,9 @@ class TaskController extends Controller
 
         $file = $request->file('file');
         $fileName = time() . '@@' . $request->file->getClientOriginalName();
-        $file->storeAs('uploads/' . $request->task_id, $fileName, 'public');
-        $fileName = $request->task_id . '-' . $fileName;
+        $fileName = $task->id . '-' . $fileName;
+        $file->storeAs('uploads', $fileName, 'public');
 
-        $task = Task::where('id', $request->task_id)->first();
         if (Carbon::now() > $task->deadline) {
             $type = 2;
         } else {
@@ -128,11 +130,11 @@ class TaskController extends Controller
         }
         $task->assignments()->where('user_id', auth()->user()->id)->update([
             'assignment_date' => Carbon::now(),
-            'status' => 'pending',
+            'status' => 1,
             'file' => $fileName,
             'type' => $type,
             'user_id' => auth()->user()->id,
-            'task_id' => $request->task_id
+            'task_id' => $task->id
         ]);
 
         return redirect()->back()->with('success', 'Penugasan berhasil diperbarui!');

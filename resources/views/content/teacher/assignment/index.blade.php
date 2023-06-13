@@ -57,33 +57,25 @@
                                 <tr>
                                     <td style="text-align: center">{{ $loop->iteration }}</td>
                                     <td style="text-align: center">{{ $assignment->user->name }}</td>
-                                    @if ($task->status == 0)
+                                    @if ($assignment->status == 0)
                                         <td style="text-align: center">Belum Dikumpul</td>
-                                    @elseif ($task->status == 1)
+                                    @elseif ($assignment->status == 1)
                                         <td style="text-align: center">Sudah Dikumpul</td>
-                                    @elseif ($task->status == 2)
+                                    @elseif ($assignment->status == 2)
                                         <td style="text-align: center">Sudah Dinilai</td>
                                     @endif
-                                    @if ($task->type == 0)
+                                    @if ($assignment->type == 1)
                                         <td style="text-align: center">Tepat Waktu</td>
                                     @else
                                         <td style="text-align: center">Terlambat</td>
                                     @endif
-                                    @if ($task->status == 0)
+                                    @if ($assignment->status == 0)
                                         <td style="text-align: center">Tidak bisa dilihat</td>
-                                    @elseif ($task->status == 1)
+                                    @else
                                         <td class="" style="text-align: center">
                                             <a href="{{ route('teacher.assignment.edit', $assignment->id) }}"
                                                 class="btn btn-sm m-1 btn-info" role="button" data-bs-toggle="Periksa"
                                                 data-bs-placement="top" title="Periksa">
-                                                <i class="fa-solid fa-chevron-right p-0"></i>
-                                            </a>
-                                        </td>
-                                    @elseif ($task->status == 2)
-                                        <td class="" style="text-align: center">
-                                            <a href="{{ route('teacher.assignment.show', $assignment->id) }}"
-                                                class="btn btn-sm m-1 btn-info" role="button" data-bs-toggle="Lihat"
-                                                data-bs-placement="top" title="Lihat">
                                                 <i class="fa-solid fa-chevron-right p-0"></i>
                                             </a>
                                         </td>

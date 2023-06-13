@@ -18,7 +18,7 @@ class StudentMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->role != 'student') {
-            return redirect()->route('dashboard');
+            return redirect()->route('logout');
         } else return $next($request);
     }
 }

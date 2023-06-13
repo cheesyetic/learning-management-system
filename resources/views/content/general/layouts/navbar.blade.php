@@ -82,12 +82,12 @@
                     @if (Auth::user()->role == 'teacher')
                         <a class="dropdown-item" href="{{ route('teacher.profile.index') }}">
                             <i class="ti ti-user-check me-2 ti-sm"></i>
-                            <span class="align-middle">My Profile</span>
+                            <span class="align-middle">Profil</span>
                         </a>
                     @else
                         <a class="dropdown-item" href="{{ route('student.profile.index') }}">
                             <i class="ti ti-user-check me-2 ti-sm"></i>
-                            <span class="align-middle">My Profile</span>
+                            <span class="align-middle">Profil</span>
                         </a>
                     @endif
                 </li>

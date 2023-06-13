@@ -28,70 +28,65 @@
                 @endphp
             </div>
         @endif
-        <div class="@if ($assignment == null || $assignment->status != 2) col-lg-7 @else col-lg-12 @endif">
+        <div class="col-lg-7">
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">{{ $task->title }}</h5>
                     <p class="card-text">{{ $task->description }}</p>
-                    @if ($assignment != null && $assignment->status == 2)
-                        <p class="card-text">Nilai: {{ $assignment->score }}</p>
-                        <p class="card-text">Catatan: {{ $assignment->note }}</p>
-                        <span class="card-text d-flex align-items-center mb-3">
-                            <span
-                                class="badge rounded-pill @if ($assignment->type == 1) bg-label-success @else bg-label-danger @endif">
-                                @if ($assignment->type == 1)
-                                    Tepat Waktu
-                                @else
-                                    Terlambat
-                                @endif
-                            </span>
+                    <span class="card-text d-flex align-items-center mb-3">
+                        <span class="badge rounded-pill bg-label-danger">
+                            {{ $task->deadline }}</span>
+                    </span>
+                    <span class="card-text d-flex align-items-center mb-3">
+                        <span
+                            class="badge rounded-pill @if ($assignment->type == 1) bg-label-success @else bg-label-danger @endif">
+                            @if ($assignment->type == 1)
+                                Tepat Waktu
+                            @else
+                                Terlambat
+                            @endif
                         </span>
-                        <a href="{{ route('student.task.download', $assignment->file) }}"
-                            class="btn btn-info waves-effect waves-light">Unduh Pekerjaanmu</a>
+                    </span>
+                    @if ($task->file == null)
+                        <p class="card-text">Tidak ada file yang dapat diunduh</p>
                     @else
-                        <span class="card-text d-flex align-items-center mb-3">
-                            <span class="badge rounded-pill bg-label-danger">
-                                {{ $task->deadline }}</span>
-                        </span>
-                        @if ($task->file == null)
-                            <p class="card-text">Tidak ada file yang dapat diunduh</p>
-                        @else
-                            <a href="{{ route('student.task.download', $task->file) }}"
-                                class="btn btn-primary waves-effect waves-light">Unduh Dokumen
-                                Tugas</a>
-                        @endif
+                        <a href="{{ route('student.task.download', $task->file) }}"
+                            class="btn btn-primary waves-effect waves-light">Unduh Dokumen
+                            Tugas</a>
                     @endif
+                    <a class="btn btn-info waves-effect waves-light"
+                        href="{{ route('student.task.download', $assignment->file) }}">Unduh
+                        Pekerjaanmu Sebelumnya</a>
                     <a href="{{ route('student.task.index') }}" class="btn btn-danger waves-effect waves-light">Kembali</a>
                 </div>
             </div>
         </div>
-        @if ($assignment == null || $assignment->status != 2)
-            <div class="col-lg-5">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Kumpulkan Pekerjaanmu Disini</h5>
-                        <form method="POST" id="form_field" action="{{ route('student.task.store') }}"
-                            enctype="multipart/form-data" class="needsclick">
-                            @csrf
-                            <input type="hidden" name="task_id" value="{{ $task->id }}">
-                            <div class="dropzone needsclick" id="dropzone">
-                                <a class="dropzone-remove-all bg-danger p-2 px-3 rounded rounded-sm btn-sm text-white btn-danger"
-                                    style="display: none">Hapus
-                                    file</a>
+        <div class="col-lg-5">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Perbarui Pekerjaanmu Disini</h5>
+                    <form method="POST" id="form_field" action="{{ route('student.task.update', $task->id) }}"
+                        enctype="multipart/form-data" class="needsclick">
+                        @csrf
+                        @method('PUT')
 
-                                <div class="dz-message needsclick">
-                                    Tarik file kesini atau klik untuk mengunggah (Maksimal 5 MB)
-                                </div>
-                                <div class="fallback">
-                                    <input name="file" type="file" />
-                                </div>
+                        <div class="dropzone needsclick" id="dropzone">
+                            <a class="dropzone-remove-all bg-danger p-2 px-3 rounded rounded-sm btn-sm text-white btn-danger"
+                                style="display: none">Hapus
+                                file</a>
+
+                            <div class="dz-message needsclick">
+                                Tarik file kesini atau klik untuk mengunggah (Maksimal 5 MB)
                             </div>
-                            <button type="submit" id="btn-submit" class="btn btn-primary mt-2">Unggah Tugas</button>
-                        </form>
-                    </div>
+                            <div class="fallback">
+                                <input name="file" type="file" />
+                            </div>
+                        </div>
+                        <button type="submit" id="btn-submit" class="btn btn-primary mt-2">Unggah Hasil Pekerjaan</button>
+                    </form>
                 </div>
             </div>
-        @endif
+        </div>
     </div>
 @endsection
 
