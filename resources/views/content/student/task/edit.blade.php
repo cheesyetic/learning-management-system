@@ -54,9 +54,6 @@
                             class="btn btn-primary waves-effect waves-light">Unduh Dokumen
                             Tugas</a>
                     @endif
-                    <a class="btn btn-info waves-effect waves-light"
-                        href="{{ route('student.task.download', $assignment->file) }}">Unduh
-                        Pekerjaanmu Sebelumnya</a>
                     <a href="{{ route('student.task.index') }}" class="btn btn-danger waves-effect waves-light">Kembali</a>
                 </div>
             </div>
@@ -64,7 +61,11 @@
         <div class="col-lg-5">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Perbarui Pekerjaanmu Disini</h5>
+                    <a class="btn btn-info waves-effect waves-light"
+                        href="{{ route('student.task.download', $assignment->file) }}">Unduh
+                        Pekerjaanmu Sebelumnya</a>
+                    <hr>
+                    <h5 class="card-title">Atau Perbarui Pekerjaanmu Disini</h5>
                     <form method="POST" id="form_field" action="{{ route('student.task.update', $task->id) }}"
                         enctype="multipart/form-data" class="needsclick">
                         @csrf

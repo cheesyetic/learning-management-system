@@ -27,7 +27,7 @@
     <div class="app-kanban">
         <div class="kanban-wrapper ps" style="height: 100%">
             <div class="kanban-container flex-column flex-lg-row">
-                <div class="kanban-board" style="width: 250px; margin-left: 15px; margin-right: 15px;">
+                <div class="kanban-board" style="width: 100% !important; margin-left: 15px; margin-right: 15px;">
                     <header class="kanban-board-header">
                         <div class="kanban-title-board">Belum Terkumpul</div>
                     </header>
@@ -68,7 +68,7 @@
                     <footer></footer>
                 </div>
                 <div data-id="board-in-review" data-order="2" class="kanban-board"
-                    style="width: 250px; margin-left: 15px; margin-right: 15px;">
+                    style="width: 100% !important; margin-left: 15px; margin-right: 15px;">
                     <header class="kanban-board-header">
                         <div class="kanban-title-board">Dalam Pengecekan</div>
                     </header>
@@ -109,7 +109,7 @@
                     <footer></footer>
                 </div>
                 <div data-id="board-done" data-order="3" class="kanban-board"
-                    style="width: 250px; margin-left: 15px; margin-right: 15px;">
+                    style="width: 100% !important; margin-left: 15px; margin-right: 15px;">
                     <header class="kanban-board-header">
                         <div class="kanban-title-board">Selesai</div>
                     </header>

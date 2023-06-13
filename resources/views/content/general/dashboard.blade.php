@@ -21,6 +21,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chocolat/1.1.0/css/chocolat.css"
         integrity="sha512-SZKIFMKtGWhRWJJ5ZEWJmKRXK/EDpYU5dKMWrF2cky8nS+KA4pwer86EIJPwuJKKFzP1bhjyL3yj5cGChmcd9g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .card-img {
+            object-fit: cover;
+        }
+    </style>
 @endsection
 
 @section('page-script')

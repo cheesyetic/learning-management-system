@@ -3,9 +3,9 @@
 @section('title', 'Materi')
 
 @section('content')
-    <div class="row">
+    <div class="row justify-content-center">
         @foreach ($materials as $material)
-            <div class="col-md-6 col-lg-4 m-auto">
+            <div class="col-md-6 col-lg-4">
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">{{ $material->title }}</h5>
