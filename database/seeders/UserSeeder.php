@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                 'name' => 'Christiant Dimas Renggana',
                 'email' => 'dimasrenggana06@gmail.com',
                 'password' => Hash::make('password'),
-                'role' => 'teacher',
+                'role' => 'student',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

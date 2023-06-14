@@ -32,6 +32,22 @@
                 <!-- Forgot Password -->
                 <div class="card">
                     <div class="card-body">
+                        @if (Session::has('success'))
+                            <div class="alert alert-success">
+                                <div class="text-center">{!! Session::get('success') !!}</div>
+                                @php
+                                    Session::forget('success');
+                                @endphp
+                            </div>
+                        @endif
+                        @if (Session::has('errors'))
+                            <div class="alert alert-danger">
+                                <div class="text-center">{{ Session::get('errors') }}</div>
+                                @php
+                                    Session::forget('errors');
+                                @endphp
+                            </div>
+                        @endif
                         <!-- Logo -->
                         <div class="app-brand justify-content-center mb-4 mt-2">
                             <a href="{{ route('forgot-password.show') }}" class="app-brand-link gap-2">

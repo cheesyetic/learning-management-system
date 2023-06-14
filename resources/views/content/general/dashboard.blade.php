@@ -38,7 +38,7 @@
     <!-- If Art is empty -->
     @if (count($arts) == 0)
         <div class="d-flex align-items-center justify-content-center flex-column" style="height: 75vh;">
-            <h4 class="text-center">Belum ada karya yang diunggah.</h4>
+            <h4 class="text-center">Belum ada karya yang diunggah :(</h4>
             <h4 class="text-center">Yuk, unggah karyamu sekarang!</h4>
         </div>
     @endif
@@ -169,9 +169,10 @@
                 </div>
             </div>
         @endforeach
-        <div id="cardContainer"></div>
-        <button class="btn btn-primary" id="loadMoreButton" onclick="load_more()">Muat Lebih Banyak Karya</button>
-
+        @if (count($arts) > 5)
+            <div id="cardContainer"></div>
+            <button class="btn btn-primary" id="loadMoreButton" onclick="load_more()">Muat Lebih Banyak Karya</button>
+        @endif
         <div class="modal fade" style="z-index: 99999" id="commentModal" tabindex="-1"
             aria-labelledby="commentModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -252,8 +253,8 @@
             const cardElement = document.createElement('div');
 
             const art_asset = cardData.category == 1 ?
-                `<img class="card-img card-img-left" style="height: 100%" src="{{ $art->file }}" alt="Card image" />` :
-                ` <video controls class="card-img card-img-left" style="height: 100%" src="{{ $art->file }}"></video>`;
+                `<img class="card-img card-img-left" style="height: 100%" src="${cardData.file}" alt="Card image" />` :
+                ` <video controls class="card-img card-img-left" style="height: 100%" src="${cardData.file}"></video>`;
             const art_crud = cardData.user_id == {{ auth()->user()->id }} ?
                 `<div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
                     <button class="btn bg-transparent" type="button" id="dropdownMenuButton"

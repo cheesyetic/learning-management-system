@@ -3,6 +3,11 @@
 @section('title', 'Materi')
 
 @section('content')
+    @if ($materials->isEmpty())
+        <div class="d-flex align-items-center justify-content-center flex-column" style="height: 75vh;">
+            <h4 class="text-center">Belum ada materi yang tersedia nih :(</h4>
+        </div>
+    @endif
     <div class="row">
         @foreach ($materials as $material)
             <div class="col-md-6 col-lg-4 m-auto">

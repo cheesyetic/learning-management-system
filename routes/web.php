@@ -116,8 +116,8 @@ Route::middleware('not.auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::get('/forgot-password', [AuthController::class, 'show_forgot_password'])->name('forgot-password.show');
     Route::post('/forgot-password', [AuthController::class, 'forgot_password'])->name('forgot-password');
-    Route::get('/reset-password/{token}', [AuthController::class, 'show_reset_password'])->name('reset-password.show');
-    Route::post('/reset-password', [AuthController::class, 'reset_password'])->name('reset-password');
+    Route::get('/reset-password/{token}', [AuthController::class, 'show_reset_password'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'reset_password'])->name('password-reset');
 });
 
 

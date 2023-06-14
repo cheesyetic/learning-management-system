@@ -33,6 +33,22 @@
                 <!-- Reset Password -->
                 <div class="card">
                     <div class="card-body">
+                        @if (Session::has('success'))
+                            <div class="alert alert-success">
+                                <div class="text-center">{!! Session::get('success') !!}</div>
+                                @php
+                                    Session::forget('success');
+                                @endphp
+                            </div>
+                        @endif
+                        @if (Session::has('errors'))
+                            <div class="alert alert-danger">
+                                <div class="text-center">{{ Session::get('errors') }}</div>
+                                @php
+                                    Session::forget('errors');
+                                @endphp
+                            </div>
+                        @endif
                         <!-- Logo -->
                         <div class="app-brand justify-content-center mb-4 mt-2">
                             <a href="{{ url('/') }}" class="app-brand-link gap-2">
@@ -43,10 +59,17 @@
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-1 pt-2">Ganti Password 🔒</h4>
-                        <p class="mb-4">for <span class="fw-bold">john.doe@email.com</span></p>
-                        <form id="formAuthentication" action="{{ route('reset-password') }}" method="POST">
+                        <form id="formAuthentication" action="{{ route('password-reset') }}" method="POST">
                             @csrf
 
+                            <input type="hidden" name="token" value="{{ $token }}">
+                            <div class="mb-3 form-password-toggle">
+                                <label class="form-label" for="password">Email</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="email" id="email" class="form-control" name="email"
+                                        placeholder="Masukkan kembali email anda disini" aria-describedby="email" />
+                                </div>
+                            </div>
                             <div class="mb-3 form-password-toggle">
                                 <label class="form-label" for="password">Password Baru</label>
                                 <div class="input-group input-group-merge">
@@ -57,10 +80,10 @@
                                 </div>
                             </div>
                             <div class="mb-3 form-password-toggle">
-                                <label class="form-label" for="confirm_password">Konfirmasi Password</label>
+                                <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="confirm_password" class="form-control"
-                                        name="confirm_password"
+                                    <input type="password" id="password_confirmation" class="form-control"
+                                        name="password_confirmation"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
