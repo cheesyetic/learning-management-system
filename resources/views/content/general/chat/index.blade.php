@@ -47,11 +47,8 @@
                     </div>
                     <!-- Chats -->
                     <ul class="list-unstyled chat-contact-list" id="chat-list">
-                        <li class="chat-contact-list-item chat-list-item-0 d-none">
-                            <h6 class="text-muted mb-0">Tidak terdapat pesan ditemukan.</h6>
-                        </li>
                         @if ($chats->count() == 0)
-                            <li class="chat-contact-list-item chat-list-item-0">
+                            <li class="chat-list-item-0 px-4 py-2" style="cursor: default;">
                                 <h6 class="text-muted mb-0">Tidak terdapat pesan ditemukan.</h6>
                             </li>
                         @else
@@ -132,13 +129,10 @@
                                     <div class="chat-contact-info flex-grow-1 ms-2">
                                         <h6 class="m-0" id="chat_username">USERNAME</h6>
                                     </div>
-                                    <div id="chat_refresh"></div>
                                 </div>
                                 <!-- Chat Profile from Javascript -->
                             </div>
-                            <div>
-                                <!-- Refresh Button -->
-                            </div>
+                            <div id="chat_refresh"></div>
                         </div>
                     </div>
                     <div class="chat-history-body bg-body">
