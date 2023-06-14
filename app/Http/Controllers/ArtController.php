@@ -12,6 +12,7 @@ class ArtController extends Controller
     public function index(Request $request)
     {
         $arts = Art::with('comments', 'user')->latest()->paginate(5);
+        $arts_count = Art::count();
 
         foreach ($arts as $art) {
             $art->is_liked = $art->likes()->where('user_id', auth()->user()->id)->exists();
@@ -19,7 +20,7 @@ class ArtController extends Controller
             $art->diff = $created_at->diffForHumans();
         }
 
-        return view('content.general.dashboard', compact('arts'))
+        return view('content.general.dashboard', compact('arts', 'arts_count'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 

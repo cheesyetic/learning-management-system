@@ -36,6 +36,12 @@
         Chocolat(document.querySelectorAll('.chocolat-image'), {
             // options here
         })
+
+        function refreshChocolat() {
+            Chocolat(document.querySelectorAll('.chocolat-image'), {
+                // options here
+            })
+        }
     </script>
 @endsection
 
@@ -146,7 +152,10 @@
                         </div>
                     </div>
                     @if ($art->category == 1)
-                        <img class="card-img-top" src="{{ $art->file }}" height="450" alt="Card image cap" />
+                        <a class="chocolat-image" href="{{ $art->file }}" title="image">
+                            <img class="card-img card-img-top" src="{{ $art->file }}" height="450"
+                                alt="Card image cap" />
+                        </a>
                     @else
                         <video class="card-img-top" src="{{ $art->file }}" height="450" controls></video>
                     @endif
@@ -177,9 +186,12 @@
                 </div>
             </div>
         @endforeach
-        @if (count($arts) > 5)
+        @if ($arts_count > 5)
             <div id="cardContainer"></div>
-            <button class="btn btn-primary" id="loadMoreButton" onclick="load_more()">Muat Lebih Banyak Karya</button>
+            <div class="col-md-8 mx-auto">
+                <button class="btn btn-primary w-100" id="loadMoreButton" onclick="load_more()">Muat Lebih Banyak
+                    Karya</button>
+            </div>
         @endif
         <div class="modal fade" style="z-index: 99999" id="commentModal" tabindex="-1"
             aria-labelledby="commentModalLabel" aria-hidden="true">
@@ -189,20 +201,20 @@
                         <h5 class="modal-title" id="commentModalLabel">Berikan komentarmu</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body pb-0">
                         <div class="comment-list mb-2 p-4" id="comment-list">
                         </div>
-                        <form>
-                            <div class="mb-3">
-                                <label for="commentText" class="form-label">Komentar</label>
-                                <textarea class="form-control" id="commentText" rows="3"></textarea>
-                            </div>
+                        <form class="mb-0 mt-3">
+                            <label for="commentText" class="form-label">Tambahkan Komentar</label>
+                            <textarea class="form-control" id="commentText" rows="3"></textarea>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         <button type="button" id="post_comment_btn" class="btn btn-primary" onclick="postComment()"
-                            data-post-id="">Tambah Komentar</button>
+                            data-post-id="">Kirim
+                            <i class="ti ti-send ms-2"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -261,8 +273,11 @@
             const cardElement = document.createElement('div');
 
             const art_asset = cardData.category == 1 ?
-                `<img class="card-img card-img-left" style="height: 100%" src="${cardData.file}" alt="Card image" />` :
-                ` <video controls class="card-img card-img-left" style="height: 100%" src="${cardData.file}"></video>`;
+                `<a class="chocolat-image" href="${cardData.file}" title="image">
+                    <img class="card-img card-img-top" src="${cardData.file}" height="450"
+                        alt="Card image cap" />
+                </a>` :
+                `<video controls class="card-img card-img-top" height="450" src="${cardData.file}"></video>`;
             const art_crud = cardData.user_id == {{ auth()->user()->id }} ?
                 `<div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
                     <button class="btn bg-transparent" type="button" id="dropdownMenuButton"
@@ -294,25 +309,32 @@
                 <i class="ms-2 fas fa-thumbs-up" id="thumbs-up-${cardData.id}"></i></button>`;
 
             cardElement.innerHTML = `
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        ${art_asset}
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
+            <div class="col-md-8 mx-auto">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-3">
+                                <img src="{{ $art->user->photo_profile != null ? $art->user->photo_profile : asset('assets/img/avatars/blank.png') }}"
+                                    class="rounded-circle" alt="Profile Picture">
+                            </div>
+                            <h6 class="mb-0">{{ $art->user->name }}</h6>
                             ${art_crud}
-                            <h5 class="card-title">${cardData.title}</h5>
-                            <p class="card-text">
-                                ${cardData.caption}
-                            </p>
-                            <p class="card-text"><small class="text-muted">Diunggah ${cardData.diff}</small></p>
-                            ${art_like}
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#commentModal" onclick="showComments(${cardData.id})">
-                                <span data-art-id="comment-${cardData.id}">${cardData.comment}</span>
-                                <i class="ms-2 fas fa-comment"></i></button>
                         </div>
+                    </div>
+                            ${art_asset}
+                    <div class="card-body">
+                        <h5 class="card-title">${cardData.title}</h5>
+                        ${art_like}
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#commentModal" onclick="showComments(${cardData.id})">
+                            <span data-art-id="comment-${cardData.id}">${cardData.comment}</span>
+                            <i class="ms-2 fas fa-comment"></i></button>
+                        <p class="card-text mt-3">
+                            ${cardData.caption}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">Terakhir diperbarui ${cardData.diff}</small>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -335,6 +357,7 @@
                     btn_load.style.setProperty('display', 'none', 'important');
                 }
                 pageNumber++; // Increment the page number for the next request
+                refreshChocolat();
             });
         }
     </script>
@@ -350,6 +373,13 @@
 
     function showComments(id) {
         var token = '{{ session('auth_token') }}';
+        $('.comment-list').empty();
+        var html =
+            `<div class="chat-log d-flex align-items-center justify-content-center">
+                <div class="spinner-border me-2" role="status" aria-hidden="true"></div>
+                <strong>Memuat...</strong>
+            </div>`
+        $('.comment-list').append(html);
         // Make an AJAX call to fetch the comments for the post
         $.ajax({
             url: '/api/art/' + id + '/comments',
