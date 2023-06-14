@@ -119,7 +119,7 @@
             @method('DELETE')
         </form>
         @foreach ($arts as $art)
-            <div class="col-md-8 mx-auto">
+            <div class="mx-auto">
                 <div class="card mb-3">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
@@ -188,7 +188,7 @@
         @endforeach
         @if ($arts_count > 5)
             <div id="cardContainer"></div>
-            <div class="col-md-8 mx-auto">
+            <div class="mx-auto">
                 <button class="btn btn-primary w-100" id="loadMoreButton" onclick="load_more()">Muat Lebih Banyak
                     Karya</button>
             </div>
@@ -309,7 +309,7 @@
                 <i class="ms-2 fas fa-thumbs-up" id="thumbs-up-${cardData.id}"></i></button>`;
 
             cardElement.innerHTML = `
-            <div class="col-md-8 mx-auto">
+            <div class="mx-auto">
                 <div class="card mb-3">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
@@ -375,10 +375,7 @@
         var token = '{{ session('auth_token') }}';
         $('.comment-list').empty();
         var html =
-            `<div class="chat-log d-flex align-items-center justify-content-center">
-                <div class="spinner-border me-2" role="status" aria-hidden="true"></div>
-                <strong>Memuat...</strong>
-            </div>`
+            `<div class="chat-log d-flex align-items-center justify-content-center">Memuat...</div>`
         $('.comment-list').append(html);
         // Make an AJAX call to fetch the comments for the post
         $.ajax({
