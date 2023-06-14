@@ -228,7 +228,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="editCaption" class="form-label">Caption</label>
-                                <textarea class="form-control" id="editCaption" name="caption"></textarea>
+                                <textarea class="form-control" id="editCaption" name="caption" rows="10"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
