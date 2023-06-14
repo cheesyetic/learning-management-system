@@ -113,23 +113,17 @@
             @method('DELETE')
         </form>
         @foreach ($arts as $art)
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        @if ($art->category == 1)
-                            <a class="chocolat-image" href="{{ $art->file }}" title="image">
-                                <img class="card-img card-img-left" style="height: 100%" src="{{ $art->file }}"
-                                    alt="Card image" />
-                            </a>
-                        @else
-                            <video controls class="card-img card-img-left" style="height: 100%" src="{{ $art->file }}">
-                            </video>
-                        @endif
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
+            <div class="col-md-8 mx-auto">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-3">
+                                <img src="{{ $art->user->photo_profile != null ? $art->user->photo_profile : asset('assets/img/avatars/blank.png') }}"
+                                    class="rounded-circle" alt="Profile Picture">
+                            </div>
+                            <h6 class="mb-0">{{ $art->user->name }}</h6>
                             @if ($art->user_id == Auth::user()->id)
-                                <div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
+                                <div class="dropdown position-absolute end-0 me-2">
                                     <button class="btn bg-transparent" type="button" id="dropdownMenuButton"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-v"></i>
@@ -149,27 +143,36 @@
                                     </div>
                                 </div>
                             @endif
-                            <h5 class="card-title mb-1">{{ $art->title }}</h5>
-                            <p class="card-text"><small class="text-muted">Diunggah {{ $art->diff }}</small></p>
-                            <p class="card-text">
-                                {{ $art->caption }}
-                            </p>
-                            @if ($art->is_liked)
-                                <button type="button" id="btnUnlike-{{ $art->id }}" class="btn btn-primary btn-sm"
-                                    onclick="unlike({{ $art->id }})">
-                                    <span data-art-id="like-{{ $art->id }}">{{ $art->like }}</span>
-                                    <i class="ms-2 fas fa-thumbs-down" id="thumbs-down-{{ $art->id }}"></i></button>
-                            @else
-                                <button type="button" id="btnLike-{{ $art->id }}" class="btn btn-primary btn-sm"
-                                    onclick="like({{ $art->id }})">
-                                    <span data-art-id="like-{{ $art->id }}">{{ $art->like }}</span>
-                                    <i class="ms-2 fas fa-thumbs-up" id="thumbs-up-{{ $art->id }}"></i></button>
-                            @endif
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#commentModal" onclick="showComments({{ $art->id }})">
-                                <span data-art-id="comment-{{ $art->id }}">{{ $art->comment }}</span>
-                                <i class="ms-2 fas fa-comment"></i></button>
                         </div>
+                    </div>
+                    @if ($art->category == 1)
+                        <img class="card-img-top" src="{{ $art->file }}" height="450" alt="Card image cap" />
+                    @else
+                        <video class="card-img-top" src="{{ $art->file }}" height="450" controls></video>
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $art->title }}</h5>
+                        @if ($art->is_liked)
+                            <button type="button" id="btnUnlike-{{ $art->id }}" class="btn btn-primary btn-sm"
+                                onclick="unlike({{ $art->id }})">
+                                <span data-art-id="like-{{ $art->id }}">{{ $art->like }}</span>
+                                <i class="ms-2 fas fa-thumbs-down" id="thumbs-down-{{ $art->id }}"></i></button>
+                        @else
+                            <button type="button" id="btnLike-{{ $art->id }}" class="btn btn-primary btn-sm"
+                                onclick="like({{ $art->id }})">
+                                <span data-art-id="like-{{ $art->id }}">{{ $art->like }}</span>
+                                <i class="ms-2 fas fa-thumbs-up" id="thumbs-up-{{ $art->id }}"></i></button>
+                        @endif
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#commentModal" onclick="showComments({{ $art->id }})">
+                            <span data-art-id="comment-{{ $art->id }}">{{ $art->comment }}</span>
+                            <i class="ms-2 fas fa-comment"></i></button>
+                        <p class="card-text mt-3">
+                            {{ $art->caption }}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">Terakhir diperbarui {{ $art->diff }}</small>
+                        </p>
                     </div>
                 </div>
             </div>
