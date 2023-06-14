@@ -3,6 +3,11 @@
 @section('title', 'Tugas')
 
 @section('content')
+    {{-- back button --}}
+    <div class="d-flex justify-content-center mb-4">
+        <a href="{{ route('student.task.index') }}" class="btn btn-info m-auto"><i
+                class="fa fa-arrow-left me-2"></i>Kembali</a>
+    </div>
     <div class="row">
         @foreach ($tasks as $task)
             <div class="col-md-6 col-lg-4 m-auto">

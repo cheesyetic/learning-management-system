@@ -14,6 +14,8 @@
                         
                         if ($currentRouteName === $menu->slug) {
                             $activeClass = 'active';
+                        } elseif (request()->is(substr($menu->url, 1) . '*')) {
+                            $activeClass = 'active';
                         } elseif (isset($menu->submenu)) {
                             if (gettype($menu->slug) === 'array') {
                                 foreach ($menu->slug as $slug) {
@@ -51,3 +53,15 @@
     </div>
 </aside>
 <!--/ Horizontal Menu -->
+
+
+@push('styles')
+    <style>
+        @media(max-width: 767.98px) {
+            .layout-navbar .navbar-nav .nav-item.dropdown .dropdown-menu {
+                width: unset;
+                left: unset
+            }
+        }
+    </style>
+@endpush
