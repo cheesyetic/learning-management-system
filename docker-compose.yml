@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   main:
-    container_name: Serve
+    container_name: lms_main
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,7 +12,7 @@ services:
       - 8000:8000
 
   queue:
-    container_name: Queue
+    container_name: lms_queue
     build:
       context: .
       dockerfile: Dockerfile
@@ -23,7 +23,7 @@ services:
   db:
     platform: linux/x86_64
     image: mysql:8.0
-    container_name: Database
+    container_name: lms_db
     environment:
       MYSQL_DATABASE: "${DB_DATABASE}"
       MYSQL_USER: "${DB_USERNAME}"
@@ -37,18 +37,20 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: Nginx
+    container_name: lms_nginx
     volumes:
       - .:/app
-      - ./docker/nginx/learning-management-system.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - main
+      - phpmyadmin
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: PhpMyAdmin
+    container_name: lms_phpmyadmin
     links:
       - db
     environment:
