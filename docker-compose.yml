@@ -61,10 +61,6 @@ services:
     ports:
       - 8081:80
 
-networks:
-  laravel-exa:
-    driver: bridge
-
 volumes:
   db:
     driver: local
