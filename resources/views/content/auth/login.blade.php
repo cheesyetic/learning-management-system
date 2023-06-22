@@ -52,7 +52,7 @@
                         <!-- Logo -->
                         <div class="app-brand justify-content-center mb-4 mt-2">
                             <a href="{{ url('/') }}" class="app-brand-link gap-2">
-                                <img class="app-brand-logo demo"
+                                <img class="app-brand-logo demo" style="height: 24px; width: unset"
                                     src="https://cdn-icons-png.flaticon.com/512/2021/2021397.png" />
                                 <span
                                     class="app-brand-text demo text-body fw-bold">{{ config('variables.templateName') }}</span>
