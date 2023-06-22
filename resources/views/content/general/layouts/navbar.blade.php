@@ -53,7 +53,8 @@
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="{{ route('teacher.profile.index') }}">
+                    <a class="dropdown-item"
+                        @if (Auth::user()->role == 'teacher') href="{{ route('teacher.profile.index') }}" @else href="{{ route('student.profile.index') }}" @endif>
                         <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar avatar-online">

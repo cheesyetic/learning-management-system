@@ -307,17 +307,18 @@
                 onclick="like(${cardData.id})">
                 <span data-art-id="like-${cardData.id}">${cardData.like}</span>
                 <i class="ms-2 fas fa-thumbs-up" id="thumbs-up-${cardData.id}"></i></button>`;
-
+            const profile_photo = cardData.user.photo_profile != null ?
+                cardData.user.photo_profile : '{{ asset('assets/img/avatars/blank.png') }}';
             cardElement.innerHTML = `
             <div class="mx-auto">
                 <div class="card mb-3">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <div class="avatar me-3">
-                                <img src="{{ $art->user->photo_profile != null ? $art->user->photo_profile : asset('assets/img/avatars/blank.png') }}"
+                                <img src="${profile_photo}"
                                     class="rounded-circle" alt="Profile Picture">
                             </div>
-                            <h6 class="mb-0">{{ $art->user->name }}</h6>
+                            <h6 class="mb-0">${cardData.user.name}</h6>
                             ${art_crud}
                         </div>
                     </div>
