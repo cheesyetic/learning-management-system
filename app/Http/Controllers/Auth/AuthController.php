@@ -46,7 +46,7 @@ class AuthController extends Controller
 
         if ($request->role == 'student') {
             $request->validate([
-                'name' => 'required',
+                'name' => 'required|unique:users',
                 'class' => 'required',
                 'absence_number' => 'required'
             ]);
@@ -60,6 +60,10 @@ class AuthController extends Controller
                 'role' => $request->role
             ]);
         } else {
+            $request->validate([
+                'name' => 'required|unique:users',
+            ]);
+
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -76,15 +80,15 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'name' => 'required',
             'password' => 'required'
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('name', $request->name)->first();
 
-        if (!$user) return redirect()->back()->with('errors', 'Email tidak ditemukan!');
+        if (!$user) return redirect()->back()->with('errors', 'Nama tidak ditemukan!');
 
-        if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::guard('web')->attempt(['name' => $request->name, 'password' => $request->password])) {
             return redirect()->route('dashboard');
         }
 
