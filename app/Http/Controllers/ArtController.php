@@ -43,7 +43,7 @@ class ArtController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'caption' => 'required|string|max:5000',
-            'file' => 'required|mimes:png,jpg,jpeg,mp4,mkv|max:10000',
+            'file' => 'required|mimes:png,jpg,jpeg,mp4,mkv|max:50000',
             'category' => 'required',
         ]);
 

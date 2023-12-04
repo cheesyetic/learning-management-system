@@ -35,7 +35,7 @@ class MaterialController extends Controller
     $request->validate([
       'title' => 'required|string|max:255',
       'description' => 'required|string|max:5000',
-      'file' => 'required|mimes:doc,docx,pdf,xls,xlsx,csv,ppt,pptx|max:5012'
+      'file' => 'required|mimes:doc,docx,pdf,xls,xlsx,csv,ppt,pptx|max:50000'
     ]);
 
     if ($request->hasFile('file')) {
@@ -64,7 +64,7 @@ class MaterialController extends Controller
 
     if ($request->hasFile('file')) {
       $request->validate([
-        'file' => 'mimes:doc,docx,pdf,xls,xlsx,csv,ppt,pptx|max:5012'
+        'file' => 'mimes:doc,docx,pdf,xls,xlsx,csv,ppt,pptx|max:50000'
       ]);
 
       $file = $request->file('file');
