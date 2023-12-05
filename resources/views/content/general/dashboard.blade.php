@@ -349,12 +349,13 @@
             const btn_load = document.getElementById('loadMoreButton')
             btn_load.disabled = true;
             fetchData().then((data) => {
+                console.log(data);
                 data.data.forEach((cardData) => {
                     const cardElement = createCardElement(cardData);
                     document.getElementById('cardContainer').appendChild(cardElement);
                 });
                 btn_load.disabled = false;
-                if (data.last_page == pageNumber || data.next_page_url) {
+                if (data.last_page == pageNumber || data.next_page_url == null) {
                     btn_load.style.setProperty('display', 'none', 'important');
                 }
                 pageNumber++; // Increment the page number for the next request
