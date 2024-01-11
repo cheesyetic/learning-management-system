@@ -3,7 +3,7 @@
 return [
   "creatorName" => "Overdose Studio",
   "creatorUrl" => "https://instagram.com/overdose.std",
-  "templateName" => "SemangArt",
+  "templateName" => "SemangArts",
   "templateSuffix" => "",
   "templateVersion" => "1.0.0",
   "templateFree" => false,
